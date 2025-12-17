@@ -1,0 +1,138 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import type { SiteSettings } from "@prisma/client"
+
+interface SettingsFormProps {
+  settings: SiteSettings | null
+}
+
+export function SettingsForm({ settings }: SettingsFormProps) {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    siteName: settings?.siteName || "FawziUiUx",
+    logoUrl: settings?.logoUrl || "",
+    footerText: settings?.footerText || "© 2023 All Rights Reserved",
+    facebookUrl: settings?.facebookUrl || "",
+    twitterUrl: settings?.twitterUrl || "",
+    instagramUrl: settings?.instagramUrl || "",
+    linkedinUrl: settings?.linkedinUrl || "",
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        router.refresh()
+        alert("Settings updated successfully!")
+      }
+    } catch (error) {
+      alert("Failed to update settings")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Site Name</label>
+        <input
+          type="text"
+          value={formData.siteName}
+          onChange={(e) => setFormData({ ...formData, siteName: e.target.value })}
+          className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Logo URL</label>
+        <input
+          type="text"
+          value={formData.logoUrl}
+          onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
+          className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Footer Text</label>
+        <input
+          type="text"
+          value={formData.footerText}
+          onChange={(e) => setFormData({ ...formData, footerText: e.target.value })}
+          className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        />
+      </div>
+
+      <div className="border-t pt-6">
+        <h3 className="font-bold mb-4">Social Links</h3>
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium">Facebook URL</label>
+            <input
+              type="url"
+              value={formData.facebookUrl}
+              onChange={(e) => setFormData({ ...formData, facebookUrl: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background mt-1"
+              placeholder="https://facebook.com/yourpage"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Twitter URL</label>
+            <input
+              type="url"
+              value={formData.twitterUrl}
+              onChange={(e) => setFormData({ ...formData, twitterUrl: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background mt-1"
+              placeholder="https://twitter.com/yourhandle"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Instagram URL</label>
+            <input
+              type="url"
+              value={formData.instagramUrl}
+              onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background mt-1"
+              placeholder="https://instagram.com/yourprofile"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium">LinkedIn URL</label>
+            <input
+              type="url"
+              value={formData.linkedinUrl}
+              onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background mt-1"
+              placeholder="https://linkedin.com/in/yourprofile"
+            />
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full px-4 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
+      >
+        {loading ? "Saving..." : "Save Settings"}
+      </button>
+    </form>
+  )
+}
