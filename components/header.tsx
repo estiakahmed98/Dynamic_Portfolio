@@ -128,25 +128,14 @@ export function Header({ settings }: HeaderProps) {
             </Link>
           </nav>
 
-          {(settings as any)?.cvFile ? (
-            <Link
-              href={(settings as any).cvFile}
-              download
-              className="hidden md:inline-flex items-center justify-center rounded-md px-6 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90"
-              style={{backgroundColor: '#141E30', color: '#FFFFFF'}}
-            >
-              Download CV
-            </Link>
-          ) : (
-            <Link
-              href="/cv.pdf"
-              download
-              className="hidden md:inline-flex items-center justify-center rounded-md px-6 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90"
-              style={{backgroundColor: '#141E30', color: '#FFFFFF'}}
-            >
-              Download CV
-            </Link>
-          )}
+          <Link
+            href="/Resume of Estiak Ahmed.pdf"
+            download
+            className="hidden md:inline-flex items-center justify-center rounded-md px-6 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90"
+            style={{backgroundColor: '#141E30', color: '#FFFFFF'}}
+          >
+            Download CV
+          </Link>
         </div>
       </div>
     </header>

@@ -90,7 +90,6 @@ model SiteSettings {
   logoUrl           String
   footerText        String
   servicesDescription String?
-  cvFile            String?
   facebookUrl       String?
   twitterUrl        String?
   instagramUrl      String?
