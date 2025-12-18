@@ -71,7 +71,7 @@ export function Footer({ settings }: FooterProps) {
           </div>
 
           <div className="text-center text-sm" style={{color: '#E0E0E0'}}>
-            <p>{settings?.footerText || "© 2023 All Rights Reserved"}</p>
+            <p>{settings?.footerText || "© 2026 All Rights Reserved"}</p>
           </div>
         </div>
       </div>

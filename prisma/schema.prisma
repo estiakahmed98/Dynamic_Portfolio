@@ -84,17 +84,18 @@ model Testimonial {
 }
 
 model SiteSettings {
-  id            String   @id @default(cuid())
-  siteName      String   
-  subtitle      String   
-  logoUrl       String
-  footerText    String
-  facebookUrl   String?
-  twitterUrl    String?
-  instagramUrl  String?
-  linkedinUrl   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id                String   @id @default(cuid())
+  siteName          String   
+  subtitle          String   
+  logoUrl           String
+  footerText        String
+  servicesDescription String?
+  facebookUrl       String?
+  twitterUrl        String?
+  instagramUrl      String?
+  linkedinUrl       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model ContactSubmission {

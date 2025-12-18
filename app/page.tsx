@@ -11,10 +11,9 @@ import { Footer } from "@/components/footer"
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
-  const [hero, about, services, projects, testimonials, settings] = await Promise.all([
+  const [hero, about, projects, testimonials, settings] = await Promise.all([
     prisma.hero.findFirst(),
     prisma.about.findFirst({ include: { skills: { orderBy: { order: "asc" } } } }),
-    prisma.service.findMany({ orderBy: { order: "asc" } }),
     prisma.project.findMany({ orderBy: { order: "asc" } }),
     prisma.testimonial.findMany({ orderBy: { order: "asc" } }),
     prisma.siteSettings.findFirst(),
@@ -26,7 +25,7 @@ export default async function Home() {
       <main>
         {hero && <HeroSection data={hero} />}
         {about && <AboutSection data={about} />}
-        {services.length > 0 && <ServicesSection data={services} />}
+        <ServicesSection />
         {projects.length > 0 && <ProjectsSection data={projects} />}
         {testimonials.length > 0 && <TestimonialsSection data={testimonials} />}
         <ContactSection />

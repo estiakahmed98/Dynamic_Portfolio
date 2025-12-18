@@ -16,7 +16,8 @@ export function SettingsForm({ settings }: SettingsFormProps) {
   const [formData, setFormData] = useState({
     siteName: settings?.siteName || "FawziUiUx",
     logoUrl: settings?.logoUrl || "",
-    footerText: settings?.footerText || "© 2023 All Rights Reserved",
+    footerText: settings?.footerText || "© 2026 All Rights Reserved",
+    servicesDescription: (settings as any)?.servicesDescription || "",
     facebookUrl: settings?.facebookUrl || "",
     twitterUrl: settings?.twitterUrl || "",
     instagramUrl: settings?.instagramUrl || "",
@@ -77,6 +78,17 @@ export function SettingsForm({ settings }: SettingsFormProps) {
           onChange={(e) => setFormData({ ...formData, footerText: e.target.value })}
           className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
           required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Services Description</label>
+        <textarea
+          value={formData.servicesDescription}
+          onChange={(e) => setFormData({ ...formData, servicesDescription: e.target.value })}
+          className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary min-h-[100px]"
+          placeholder="Describe your services here..."
+          rows={3}
         />
       </div>
 
