@@ -1,0 +1,12 @@
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/portfolio_db"
+
+# NextAuth
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Optional: External services
+# EMAIL_HOST="smtp.gmail.com"
+# EMAIL_PORT="587"
+# EMAIL_USER="your-email@gmail.com"
+# EMAIL_PASS="your-app-password"

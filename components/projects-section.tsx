@@ -11,7 +11,7 @@ interface ProjectsSectionProps {
 export function ProjectsSection({ data }: ProjectsSectionProps) {
   const [activeFilter, setActiveFilter] = useState("All")
 
-  const categories = ["All", ...Array.from(new Set(data.map((p) => p.category)))]
+  const categories = ["All", ...Array.from(new Set(data?.map((p) => p.category) || []))]
 
   const filteredProjects = activeFilter === "All" ? data : data.filter((p) => p.category === activeFilter)
 

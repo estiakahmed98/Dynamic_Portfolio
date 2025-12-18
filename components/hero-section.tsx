@@ -4,10 +4,14 @@ import type { Hero } from "@prisma/client"
 import { Facebook, Instagram, Linkedin } from "lucide-react"
 
 interface HeroSectionProps {
-  data: Hero
+  data: Hero | null
 }
 
 export function HeroSection({ data }: HeroSectionProps) {
+  if (!data) {
+    return null
+  }
+
   return (
     <section id="home" className="container mx-auto px-4 py-20 md:py-32">
       <div className="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
@@ -51,11 +55,11 @@ export function HeroSection({ data }: HeroSectionProps) {
           </span>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading leading-tight" style={{color: '#141E30'}}>
-            {data.title.split("Creative Design").map((part, i) => (
+            {data.title?.split("Creative Design").map((part, i) => (
               <span key={i}>
                 {part}
               </span>
-            ))}
+            )) || data.title}
           </h1>
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold font-heading" style={{color: '#35577D'}}>{data.subtitle}</h2>
 

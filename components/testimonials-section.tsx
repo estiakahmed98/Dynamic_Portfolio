@@ -14,6 +14,8 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
+    if (data.length === 0) return
+
     // Start automatic rotation
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % data.length)
@@ -28,6 +30,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   }, [data.length])
 
   const nextSlide = () => {
+    if (data.length === 0) return
     setCurrentIndex((prev) => (prev + 1) % data.length)
     // Reset interval when user manually navigates
     if (intervalRef.current) {
@@ -39,6 +42,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   }
 
   const prevSlide = () => {
+    if (data.length === 0) return
     setCurrentIndex((prev) => (prev - 1 + data.length) % data.length)
     // Reset interval when user manually navigates
     if (intervalRef.current) {

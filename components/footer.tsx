@@ -16,7 +16,7 @@ export function Footer({ settings }: FooterProps) {
             {settings?.logoUrl ? (
               <Image
                 src={settings.logoUrl || "/placeholder.svg"}
-                alt={settings.siteName}
+                alt={settings?.siteName || "Portfolio"}
                 width={150}
                 height={40}
                 className="h-10 w-auto brightness-0 invert"

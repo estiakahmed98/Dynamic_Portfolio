@@ -41,7 +41,7 @@ export function Header({ settings }: HeaderProps) {
             {settings?.logoUrl && (
               <Image
                 src={settings.logoUrl || "/placeholder.svg"}
-                alt={settings.siteName}
+                alt={settings?.siteName || "Portfolio"}
                 width={150}
                 height={40}
                 className="h-10 w-auto"
@@ -49,7 +49,7 @@ export function Header({ settings }: HeaderProps) {
             )}
             <div className="flex flex-col">
               <span className="text-lg md:text-xl font-bold font-heading" style={{color: '#141E30'}}>{settings?.siteName || "Portfolio"}</span>
-              <span className="text-xs md:text-sm" style={{color: '#35577D'}}>{(settings as any).subtitle || "Software Engineer"}</span>
+              <span className="text-xs md:text-sm" style={{color: '#35577D'}}>{settings?.subtitle || "Software Engineer"}</span>
             </div>
           </Link>
 
