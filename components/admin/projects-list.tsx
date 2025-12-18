@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import type { Project } from "@prisma/client"
 import { Plus, Trash2, Edit } from "lucide-react"
 import Image from "next/image"
+import { toast } from "sonner"
 
 interface ProjectsListProps {
   projects: Project[]
@@ -45,8 +46,9 @@ export function ProjectsList({ projects }: ProjectsListProps) {
       setShowAdd(false)
       setEditingId(null)
       router.refresh()
+      toast.success("Project saved successfully!")
     } catch (error) {
-      alert("Failed to save project")
+      toast.error("Failed to save project")
     }
   }
 
@@ -67,8 +69,9 @@ export function ProjectsList({ projects }: ProjectsListProps) {
     try {
       await fetch(`/api/admin/projects/${id}`, { method: "DELETE" })
       router.refresh()
+      toast.success("Project deleted successfully!")
     } catch (error) {
-      alert("Failed to delete project")
+      toast.error("Failed to delete project")
     }
   }
 

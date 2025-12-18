@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { About } from "@prisma/client"
+import { toast } from "sonner"
 
 interface AboutFormProps {
   about: About | null
@@ -32,10 +33,10 @@ export function AboutForm({ about }: AboutFormProps) {
 
       if (response.ok) {
         router.refresh()
-        alert("About section updated successfully!")
+        toast.success("About section updated successfully!")
       }
     } catch (error) {
-      alert("Failed to update about section")
+      toast.error("Failed to update about section")
     } finally {
       setLoading(false)
     }

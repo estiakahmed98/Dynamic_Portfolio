@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { SiteSettings } from "@prisma/client"
+import { toast } from "sonner"
 
 interface SettingsFormProps {
   settings: SiteSettings | null
@@ -13,34 +14,70 @@ interface SettingsFormProps {
 export function SettingsForm({ settings }: SettingsFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [formData, setFormData] = useState({
     siteName: settings?.siteName || "FawziUiUx",
     logoUrl: settings?.logoUrl || "",
     footerText: settings?.footerText || "© 2026 All Rights Reserved",
     servicesDescription: (settings as any)?.servicesDescription || "",
+    cvFile: (settings as any)?.cvFile || "",
     facebookUrl: settings?.facebookUrl || "",
     twitterUrl: settings?.twitterUrl || "",
     instagramUrl: settings?.instagramUrl || "",
     linkedinUrl: settings?.linkedinUrl || "",
   })
+  const [cvFile, setCvFile] = useState<File | null>(null)
+
+  const handleCvFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.type !== "application/pdf") {
+      toast.error("Only PDF files are allowed")
+      return
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File size cannot exceed 10MB")
+      return
+    }
+
+    setCvFile(file)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
+      const submitFormData = new FormData()
+      
+      // Add all form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'cvFile') {
+          submitFormData.append(key, value)
+        }
+      })
+      
+      // Add CV file if selected
+      if (cvFile) {
+        submitFormData.append('cvFile', cvFile)
+      }
+
       const response = await fetch("/api/admin/settings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: submitFormData,
       })
 
       if (response.ok) {
         router.refresh()
-        alert("Settings updated successfully!")
+        toast.success("Settings updated successfully!")
+      } else {
+        const error = await response.json()
+        toast.error(error.error || "Failed to update settings")
       }
     } catch (error) {
-      alert("Failed to update settings")
+      toast.error("Failed to update settings")
     } finally {
       setLoading(false)
     }
@@ -90,6 +127,29 @@ export function SettingsForm({ settings }: SettingsFormProps) {
           placeholder="Describe your services here..."
           rows={3}
         />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">CV Upload</label>
+        <input
+          type="file"
+          accept=".pdf"
+          onChange={handleCvFileChange}
+          className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+        {cvFile && (
+          <p className="text-sm text-muted-foreground">
+            Selected: {cvFile.name} ({(cvFile.size / 1024 / 1024).toFixed(2)} MB)
+          </p>
+        )}
+        {formData.cvFile && !cvFile && (
+          <p className="text-sm text-muted-foreground">
+            Current CV: {formData.cvFile}
+          </p>
+        )}
+        <p className="text-xs text-muted-foreground">
+          Upload a PDF file (max 10MB)
+        </p>
       </div>
 
       <div className="border-t pt-6">

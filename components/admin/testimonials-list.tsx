@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Testimonial } from "@prisma/client"
 import { Plus, Trash2, Edit } from "lucide-react"
+import { toast } from "sonner"
 
 interface TestimonialsListProps {
   testimonials: Testimonial[]
@@ -44,8 +45,9 @@ export function TestimonialsList({ testimonials }: TestimonialsListProps) {
       setShowAdd(false)
       setEditingId(null)
       router.refresh()
+      toast.success("Testimonial saved successfully!")
     } catch (error) {
-      alert("Failed to save testimonial")
+      toast.error("Failed to save testimonial")
     }
   }
 
@@ -66,8 +68,9 @@ export function TestimonialsList({ testimonials }: TestimonialsListProps) {
     try {
       await fetch(`/api/admin/testimonials/${id}`, { method: "DELETE" })
       router.refresh()
+      toast.success("Testimonial deleted successfully!")
     } catch (error) {
-      alert("Failed to delete testimonial")
+      toast.error("Failed to delete testimonial")
     }
   }
 

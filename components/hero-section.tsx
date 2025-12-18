@@ -1,13 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
-import type { Hero } from "@prisma/client"
+import type { Hero, SiteSettings } from "@prisma/client"
 import { Facebook, Instagram, Linkedin } from "lucide-react"
 
 interface HeroSectionProps {
   data: Hero | null
+  settings?: SiteSettings | null
 }
 
-export function HeroSection({ data }: HeroSectionProps) {
+export function HeroSection({ data, settings }: HeroSectionProps) {
   if (!data) {
     return null
   }
@@ -35,15 +36,21 @@ export function HeroSection({ data }: HeroSectionProps) {
 
           {/* Mobile social links */}
           <div className="flex justify-center gap-4 mt-6">
-            <Link href="https://facebook.com" className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
-              <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </Link>
-            <Link href="https://instagram.com" className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
-              <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </Link>
-            <Link href="https://linkedin.com" className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
-              <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </Link>
+            {settings?.facebookUrl && (
+              <Link href={settings.facebookUrl} className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
+                <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </Link>
+            )}
+            {settings?.instagramUrl && (
+              <Link href={settings.instagramUrl} className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
+                <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </Link>
+            )}
+            {settings?.linkedinUrl && (
+              <Link href={settings.linkedinUrl} className="p-3 rounded-lg bg-white shadow-md hover:shadow-lg transition-all duration-300 group" style={{color: '#141E30'}}>
+                <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              </Link>
+            )}
           </div>
         </div>
 
@@ -112,15 +119,21 @@ export function HeroSection({ data }: HeroSectionProps) {
             <div className="hidden lg:flex absolute -right-4 top-1/2 -translate-y-1/2 flex-col items-center gap-4 bg-white shadow-xl rounded-2xl p-4 border border-gray-100">
               <span className="text-xs font-bold text-gray-600 mb-2">Follow</span>
               <div className="flex flex-col gap-3">
-                <Link href="https://facebook.com" className="p-2 rounded-lg hover:bg-blue-50 transition-all duration-300 group" style={{color: '#141E30'}}>
-                  <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </Link>
-                <Link href="https://instagram.com" className="p-2 rounded-lg hover:bg-pink-50 transition-all duration-300 group" style={{color: '#141E30'}}>
-                  <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </Link>
-                <Link href="https://linkedin.com" className="p-2 rounded-lg hover:bg-blue-50 transition-all duration-300 group" style={{color: '#141E30'}}>
-                  <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </Link>
+                {settings?.facebookUrl && (
+                  <Link href={settings.facebookUrl} className="p-2 rounded-lg hover:bg-blue-50 transition-all duration-300 group" style={{color: '#141E30'}}>
+                    <Facebook className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </Link>
+                )}
+                {settings?.instagramUrl && (
+                  <Link href={settings.instagramUrl} className="p-2 rounded-lg hover:bg-pink-50 transition-all duration-300 group" style={{color: '#141E30'}}>
+                    <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </Link>
+                )}
+                {settings?.linkedinUrl && (
+                  <Link href={settings.linkedinUrl} className="p-2 rounded-lg hover:bg-blue-50 transition-all duration-300 group" style={{color: '#141E30'}}>
+                    <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>

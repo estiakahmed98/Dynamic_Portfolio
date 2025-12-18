@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Service } from "@prisma/client"
 import { Plus, Trash2, Edit, Image as ImageIcon } from "lucide-react"
+import { toast } from "sonner"
 
 interface ServicesListProps {
   services: Service[]
@@ -44,8 +45,9 @@ export function ServicesList({ services }: ServicesListProps) {
       setShowAdd(false)
       setEditingId(null)
       router.refresh()
+      toast.success("Service saved successfully!")
     } catch (error) {
-      alert("Failed to save service")
+      toast.error("Failed to save service")
     }
   }
 
@@ -66,8 +68,9 @@ export function ServicesList({ services }: ServicesListProps) {
     try {
       await fetch(`/api/admin/services/${id}`, { method: "DELETE" })
       router.refresh()
+      toast.success("Service deleted successfully!")
     } catch (error) {
-      alert("Failed to delete service")
+      toast.error("Failed to delete service")
     }
   }
 

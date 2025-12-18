@@ -23,7 +23,7 @@ export default async function Home() {
     <div className="min-h-screen">
       <Header settings={settings} />
       <main>
-        {hero && <HeroSection data={hero} />}
+        {hero && <HeroSection data={hero} settings={settings} />}
         {about && <AboutSection data={about} />}
         <ServicesSection />
         {projects.length > 0 && <ProjectsSection data={projects} />}

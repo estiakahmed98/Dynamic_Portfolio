@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Skill } from "@prisma/client"
 import { Plus, Trash2 } from "lucide-react"
+import { toast } from "sonner"
 
 interface SkillsListProps {
   skills: Skill[]
@@ -33,9 +34,10 @@ export function SkillsList({ skills, aboutId }: SkillsListProps) {
         setNewSkill({ name: "", percentage: 80 })
         setShowAdd(false)
         router.refresh()
+        toast.success("Skill added successfully!")
       }
     } catch (error) {
-      alert("Failed to add skill")
+      toast.error("Failed to add skill")
     } finally {
       setLoading(false)
     }
@@ -47,8 +49,9 @@ export function SkillsList({ skills, aboutId }: SkillsListProps) {
     try {
       await fetch(`/api/admin/skills/${id}`, { method: "DELETE" })
       router.refresh()
+      toast.success("Skill deleted successfully!")
     } catch (error) {
-      alert("Failed to delete skill")
+      toast.error("Failed to delete skill")
     }
   }
 

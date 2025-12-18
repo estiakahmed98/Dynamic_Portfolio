@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Hero } from "@prisma/client"
+import { toast } from "sonner"
 
 interface HeroFormProps {
   hero: Hero | null
@@ -34,10 +35,10 @@ export function HeroForm({ hero }: HeroFormProps) {
 
       if (response.ok) {
         router.refresh()
-        alert("Hero section updated successfully!")
+        toast.success("Hero section updated successfully!")
       }
     } catch (error) {
-      alert("Failed to update hero section")
+      toast.error("Failed to update hero section")
     } finally {
       setLoading(false)
     }

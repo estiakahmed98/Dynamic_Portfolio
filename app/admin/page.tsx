@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { DashboardStats } from "@/components/admin/dashboard-stats"
 import { RecentSubmissions } from "@/components/admin/recent-submissions"
+import { ContactsList } from "@/components/admin/contacts-list"
 
 export default async function AdminDashboard() {
   const admin = await getCurrentAdmin()
@@ -41,8 +42,13 @@ export default async function AdminDashboard() {
           contacts={contactCount}
         />
 
-        <div className="mt-8">
-          <RecentSubmissions submissions={recentContacts} />
+        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+          <div>
+            <RecentSubmissions submissions={recentContacts} />
+          </div>
+          <div className="bg-background rounded-xl shadow-sm p-6">
+            <ContactsList />
+          </div>
         </div>
       </main>
     </div>
